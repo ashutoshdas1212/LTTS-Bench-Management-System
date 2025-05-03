@@ -1,0 +1,171 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Employee Container */
+  .employee-container {
+    width: 90%;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Filters Section */
+  .filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 10px;
+    background: #eef2f7;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .filter-group label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .filter-group select,
+  .filter-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  /* Records per page - Separate alignment */
+  .filter-group:last-child {
+    margin-left: auto;
+  }
+  
+  /* Table Container */
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+  
+  .employee-table thead {
+    background: #007bff;
+    color: white;
+  }
+  
+  .employee-table th,
+  .employee-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .employee-table tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+  
+  .employee-table tr:hover {
+    background: #e6f2ff;
+  }
+  
+  /* Buttons */
+  .toggle-btn {
+    background: #28a745;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .toggle-btn:hover {
+    background: #218838;
+  }
+  
+  .download-btn {
+    background: #ff9800;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .download-btn:hover {
+    background: #e68900;
+  }
+  
+  /* Pagination */
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+  }
+  
+  .pagination-container button {
+    background: #007bff;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination-container button:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination-container span {
+    font-weight: bold;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .filters-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .filter-group:last-child {
+      margin-left: 0;
+    }
+  
+    .employee-table th,
+    .employee-table td {
+      font-size: 12px;
+      padding: 8px;
+    }
+  }
+  
+  /* Export Excel Button */
+.export-excel-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.export-excel-btn:hover {
+  background: #0056b3;
+}
