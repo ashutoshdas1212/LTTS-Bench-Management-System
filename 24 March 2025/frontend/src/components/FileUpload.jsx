@@ -7,7 +7,7 @@ const FileUpload = () => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // For redirection
+  const navigate = useNavigate(); 
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -31,7 +31,7 @@ const FileUpload = () => {
       });
 
       if (response.status === 200) {
-        navigate("/employees"); // Redirect to the main employee list page
+        navigate("/employees"); 
       } else {
         setError("File upload failed. Please try again.");
       }

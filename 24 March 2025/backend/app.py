@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, send_file
-from flask_cors import CORS  # ✅ Import CORS to fix frontend issue
+from flask_cors import CORS  
 import pandas as pd
 import mysql.connector
 import os
@@ -7,24 +7,24 @@ import pandas as pd
 from flask import send_file
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # ✅ Enable CORS for all routes
+CORS(app, resources={r"/*": {"origins": "*"}})  
 
-# ✅ MySQL Database Configuration
+
 db_config = {
     "host": "localhost",
     "user": "root",
-    "password": "123@",  # 🔹 Ensure this is correct
+    "password": "123@",  
     "database": "benchresource"
 }
 
 UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # ✅ Ensure uploads directory exists
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  
 
-# Add a global variable to store the uploaded file name
+
 UPLOADED_FILE_NAME = None
-ORIGINAL_FILE_PATH = None  # Store the path to the original Excel file
+ORIGINAL_FILE_PATH = None 
 
-# ✅ API: Upload Excel File
+
 @app.route("/upload", methods=["POST"])
 def upload_file():
     global UPLOADED_FILE_NAME, ORIGINAL_FILE_PATH
@@ -40,27 +40,27 @@ def upload_file():
     file_path = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(file_path)
 
-    # Store the uploaded file name and original file path
+   
     UPLOADED_FILE_NAME = file.filename
-    ORIGINAL_FILE_PATH = file_path  # Store the path to the original file
+    ORIGINAL_FILE_PATH = file_path 
 
-    # Debug: Print the original file path
+    
     print(f"Original file path: {ORIGINAL_FILE_PATH}")
 
-    # Process Excel File
+    
     try:
         df = pd.read_excel(file_path)
         return jsonify({"message": "File uploaded successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ✅ Function to Ensure MySQL Table Exists
+
 def setup_database():
     try:
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()
 
-        # ✅ Creating Employee Data Table
+      
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS employee_data (
             PS_No VARCHAR(20) PRIMARY KEY,
@@ -75,10 +75,10 @@ def setup_database():
         """)
 
         connection.commit()
-        print("✅ Table 'employee_data' is ready!")
+        print(" Table 'employee_data' is ready!")
 
     except mysql.connector.Error as err:
-        print(f"❌ Error setting up database: {err}")
+        print(f"Error setting up database: {err}")
 
     finally:
         if 'cursor' in locals():
@@ -88,16 +88,16 @@ def setup_database():
 
 
 
-# ✅ Read Excel, Clean Data & Insert into MySQL
+
 def load_excel_to_mysql():
     file_path = "filtered_output_fixed.xlsx"
     if not os.path.exists(file_path):
-        print(f"❌ Error: File {file_path} not found!")
+        print(f" Error: File {file_path} not found!")
         return
 
     df = pd.read_excel(file_path)
 
-    # ✅ Rename columns to match MySQL table
+  
     df.rename(columns={
         'PS No': 'PS_No',
         'Employee Name': 'Employee_Name',
@@ -108,7 +108,7 @@ def load_excel_to_mysql():
 
     required_columns = {'PS_No', 'Employee_Name', 'Skill_Matrix_System', 'Grade', 'Base_Location', 'Profile', 'Status', 'Skill_Bucket'}
     if not required_columns.issubset(df.columns):
-        print(f"❌ Missing required columns! Found: {df.columns}")
+        print(f" Missing required columns! Found: {df.columns}")
         return
 
     df = df.fillna("")
@@ -117,7 +117,7 @@ def load_excel_to_mysql():
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()
 
-        # ✅ Clear previous records before inserting new ones
+    
         cursor.execute("DELETE FROM employee_data")
         connection.commit()
 
@@ -136,13 +136,13 @@ def load_excel_to_mysql():
                 Skill_Bucket = VALUES(Skill_Bucket)
                 """, (row['PS_No'], row['Employee_Name'], row['Skill_Matrix_System'], row['Grade'], row['Base_Location'], row['Profile'], row['Status'], row['Skill_Bucket']))
             except mysql.connector.Error as err:
-                print(f"❌ Error inserting row: {err}")
+                print(f" Error inserting row: {err}")
 
         connection.commit()
-        print("✅ Data inserted successfully!")
+        print(" Data inserted successfully!")
 
     except mysql.connector.Error as err:
-        print(f"❌ Database error: {err}")
+        print(f" Database error: {err}")
 
     finally:
         if 'cursor' in locals():
@@ -150,7 +150,7 @@ def load_excel_to_mysql():
         if 'connection' in locals() and connection.is_connected():
             connection.close()
 
-# ✅ API: Fetch All Employees
+
 @app.route('/employees', methods=['GET'])
 def get_all_employees():
     try:
@@ -159,7 +159,7 @@ def get_all_employees():
         cursor.execute("SELECT * FROM employee_data")
         employees = cursor.fetchall()
         
-        print("API Response from Flask:", employees)  # ✅ Log response in the backend
+        print("API Response from Flask:", employees) 
 
         return jsonify(employees)
 
@@ -173,7 +173,7 @@ def get_all_employees():
             connection.close()
 
 
-# ✅ API: Filter Employees
+
 @app.route('/employees/filter', methods=['GET'])
 def filter_employees():
     cadre_level = request.args.get('cadre')
@@ -224,7 +224,7 @@ def get_dropdown_options():
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor(dictionary=True)
 
-        # Fetch unique dropdown values
+       
         cursor.execute("SELECT DISTINCT Base_Location FROM employee_data WHERE Base_Location != ''")
         locations = [row['Base_Location'] for row in cursor.fetchall()]
 
@@ -242,7 +242,7 @@ def get_dropdown_options():
             "grades": grades, 
             "skill_buckets": skill_buckets, 
             "skills": skills
-        })  # Debug print
+        })  
 
         return jsonify({
             "locations": locations,
@@ -262,7 +262,7 @@ def get_dropdown_options():
 
 
 
-# ✅ API: Download Selected Employee Profiles as Excel
+
 @app.route('/employees/download', methods=['POST'])
 def download_selected_profiles():
     try:
@@ -293,31 +293,31 @@ def download_selected_profiles():
             cursor.close()
         if 'connection' in locals() and connection.is_connected():
             connection.close()
-# ✅ Function to update Excel file
+
 def update_excel_status(ps_no, new_status):
     try:
         if not ORIGINAL_FILE_PATH:
-            print("❌ No file uploaded.")
+            print(" No file uploaded.")
             return False
 
-        # Read the original Excel file
+        
         df_original = pd.read_excel(ORIGINAL_FILE_PATH)
 
-        # Check if 'PS No' and 'Status' columns exist
+
         if 'PS No' not in df_original.columns or 'Status' not in df_original.columns:
-            print("❌ Required columns ('PS No' or 'Status') not found in the original Excel file.")
+            print(" Required columns ('PS No' or 'Status') not found in the original Excel file.")
             return False
 
-        # Update the status for the employee with the given PS No
+       
         df_original.loc[df_original['PS No'] == ps_no, 'Status'] = new_status
 
-        # Save the updated DataFrame back to the original Excel file
+        
         df_original.to_excel(ORIGINAL_FILE_PATH, index=False)
-        print(f"✅ Updated original Excel file for PS No: {ps_no} with status: {new_status}")
+        print(f" Updated original Excel file for PS No: {ps_no} with status: {new_status}")
         return True
 
     except Exception as e:
-        print(f"❌ Error updating Excel file: {e}")
+        print(f" Error updating Excel file: {e}")
         return False
 
 @app.route('/employees/export-excel', methods=['GET'])
@@ -326,30 +326,30 @@ def export_excel():
         if not ORIGINAL_FILE_PATH:
             return jsonify({"error": "No file uploaded"}), 404
 
-        # 1. Read the original Excel file
+   
         original_df = pd.read_excel(ORIGINAL_FILE_PATH)
         
-        # 2. Get current status from MySQL
+       
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor(dictionary=True)
         cursor.execute("SELECT PS_No, Status FROM employee_data")
         status_updates = {str(row['PS_No']): row['Status'] for row in cursor.fetchall()}
         
-        # 3. Convert PS No to string in original dataframe for matching
+      
         original_df['PS No'] = original_df['PS No'].astype(str)
         
-        # 4. Update only the Status column
+      
         if 'Status' in original_df.columns:
-            # Map the status updates to the original dataframe
+           
             original_df['Status'] = original_df['PS No'].map(status_updates)
             
-            # Fill any NaN values with the original status (if no match found)
-            original_df['Status'] = original_df['Status'].fillna('Bench')  # Default value
+            
+            original_df['Status'] = original_df['Status'].fillna('Bench')  
         
-        # 5. Save to new file (preserving all original data)
+   
         output_path = os.path.join(UPLOAD_FOLDER, "updated_status.xlsx")
         
-        # Use openpyxl to preserve Excel formatting
+        
         with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
             original_df.to_excel(writer, index=False, sheet_name='Sheet1')
         
@@ -361,7 +361,7 @@ def export_excel():
         )
 
     except Exception as e:
-        print(f"❌ Error exporting Excel: {str(e)}")
+        print(f" Error exporting Excel: {str(e)}")
         return jsonify({"error": str(e)}), 500
     finally:
         if 'cursor' in locals():
@@ -369,19 +369,19 @@ def export_excel():
         if 'connection' in locals() and connection.is_connected():
             connection.close()
 
-# ✅ API: Toggle Bench Status
+
 @app.route('/employees/toggle-status/<ps_no>', methods=['POST'])
 def toggle_bench_status(ps_no):
     try:
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()
 
-        # Get current status
+   
         cursor.execute("SELECT Status FROM employee_data WHERE PS_No = %s", (ps_no,))
         current_status = cursor.fetchone()[0]
         new_status = "Not in Bench" if current_status == "Bench" else "Bench"
 
-        # Update database
+       
         cursor.execute("UPDATE employee_data SET Status = %s WHERE PS_No = %s", (new_status, ps_no))
         connection.commit()
 
@@ -400,10 +400,10 @@ def toggle_bench_status(ps_no):
 
 
 
-# ✅ Start Server
+
 if __name__ == '__main__':
-    print("✅ Connecting to MySQL and setting up database...")
+    print(" Connecting to MySQL and setting up database...")
     setup_database()
     load_excel_to_mysql()
-    print("🚀 Flask Backend is Running!")
+    print(" Flask Backend is Running!")
     app.run(debug=True)

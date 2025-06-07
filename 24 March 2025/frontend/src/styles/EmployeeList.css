@@ -1,4 +1,4 @@
-/* General Styles */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f7fc;
@@ -6,7 +6,7 @@ body {
     padding: 0;
   }
   
-  /* Employee Container */
+ 
   .employee-container {
     width: 90%;
     margin: 20px auto;
@@ -16,7 +16,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  /* Filters Section */
+
   .filters-container {
     display: flex;
     flex-wrap: wrap;
@@ -47,12 +47,12 @@ body {
     font-size: 14px;
   }
   
-  /* Records per page - Separate alignment */
+ 
   .filter-group:last-child {
     margin-left: auto;
   }
   
-  /* Table Container */
+
   .table-container {
     overflow-x: auto;
   }
@@ -83,7 +83,7 @@ body {
     background: #e6f2ff;
   }
   
-  /* Buttons */
+
   .toggle-btn {
     background: #28a745;
     color: white;
@@ -110,7 +110,7 @@ body {
     background: #e68900;
   }
   
-  /* Pagination */
+
   .pagination-container {
     display: flex;
     justify-content: center;
@@ -137,7 +137,7 @@ body {
     font-weight: bold;
   }
   
-  /* Responsive Design */
+
   @media screen and (max-width: 768px) {
     .filters-container {
       flex-direction: column;
@@ -155,7 +155,7 @@ body {
     }
   }
   
-  /* Export Excel Button */
+
 .export-excel-btn {
   background: #007bff;
   color: white;

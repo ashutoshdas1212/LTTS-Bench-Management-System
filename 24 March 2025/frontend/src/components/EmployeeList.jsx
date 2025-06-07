@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { fetchAllEmployees } from "../services/api";
-import "../styles/EmployeeList.css"; // Import CSS
+import "../styles/EmployeeList.css"; 
 
 const EmployeeList = () => {
   const {
@@ -21,27 +21,27 @@ const EmployeeList = () => {
     grade: "",
     baseLocation: "",
     skills: "",
-    skillBucket: "", // ✅ Added Skill_Bucket filter
+    skillBucket: "", 
   });
 
   const [uniqueGrades, setUniqueGrades] = useState([]);
   const [uniqueLocations, setUniqueLocations] = useState([]);
   const [uniqueSkills, setUniqueSkills] = useState([]);
-  const [uniqueSkillBuckets, setUniqueSkillBuckets] = useState([]); // ✅ Added state for Skill_Bucket
+  const [uniqueSkillBuckets, setUniqueSkillBuckets] = useState([]); 
 
-  // Fetch distinct Skill_Bucket values from the backend
+
   useEffect(() => {
     axios.get("http://127.0.0.1:5000/dropdown-options")
       .then(response => {
-        setUniqueSkillBuckets(response.data.skill_buckets); // ✅ Set Skill_Bucket values
+        setUniqueSkillBuckets(response.data.skill_buckets); 
       })
       .catch(error => console.error("Error fetching skill buckets:", error));
   }, []);
 
-  // Set unique Grades, Locations, and Skills from employees data
+
   useEffect(() => {
     if (employees) {
-      console.log("API Response from /employees:", employees); // ✅ Debugging
+      console.log("API Response from /employees:", employees); 
 
       const grades = [...new Set(employees.map((emp) => emp.Grade))];
       const locations = [...new Set(employees.map((emp) => emp.Base_Location))];
@@ -75,7 +75,7 @@ const EmployeeList = () => {
           return skillList.every((skill) => employeeSkills.includes(skill));
         });
       }
-      if (filters.skillBucket) { // ✅ Apply Skill_Bucket filter
+      if (filters.skillBucket) { 
         filteredData = filteredData.filter(
           (emp) => emp.Skill_Bucket === filters.skillBucket
         );
@@ -95,7 +95,7 @@ const EmployeeList = () => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", "employees.xlsx"); // Default filename
+        link.setAttribute("download", "employees.xlsx"); 
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -107,12 +107,12 @@ const EmployeeList = () => {
   };
 
   const toggleStatus = (ps_no) => {
-    console.log(`Toggling status for PS No: ${ps_no}`); // Debugging
+    console.log(`Toggling status for PS No: ${ps_no}`); 
     axios
       .post(`http://127.0.0.1:5000/employees/toggle-status/${ps_no}`)
       .then((response) => {
-        console.log("API Response:", response.data); // Debugging
-        // Update the status in the frontend
+        console.log("API Response:", response.data); 
+ 
         setFilteredEmployees((prevEmployees) =>
           prevEmployees.map((emp) =>
             emp.PS_No === ps_no
@@ -122,7 +122,7 @@ const EmployeeList = () => {
         );
       })
       .catch((error) => {
-        console.error("Error updating status:", error); // Debugging
+        console.error("Error updating status:", error); 
       });
   };
 
@@ -155,12 +155,12 @@ const EmployeeList = () => {
 
   return (
     <div className="employee-container">
-       {/* ✅ Add Export Excel Button */}
+   
        <button onClick={handleExportExcel} className="export-excel-btn">
   Export Excel
 </button>
 
-      {/* Filters Section */}
+    
       <div className="filters-container">
         <div className="filter-group">
           <label>Grade:</label>
@@ -216,7 +216,7 @@ const EmployeeList = () => {
         </div>
       </div>
 
-      {/* Records per Page */}
+
       <div className="records-per-page">
         <label>Records per page:</label>
         <select onChange={(e) => setRecordsPerPage(Number(e.target.value))}>
@@ -226,7 +226,7 @@ const EmployeeList = () => {
         </select>
       </div>
 
-      {/* Employee Table */}
+      
       <div className="table-container">
         <table className="employee-table">
           <thead>
@@ -266,7 +266,7 @@ const EmployeeList = () => {
         </table>
       </div>
 
-      {/* Pagination */}
+    
       <div className="pagination-container">
         <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
           Previous

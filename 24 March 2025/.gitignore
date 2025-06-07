@@ -1,0 +1,10 @@
+# Backend
+uploads/
+*.pyc
+__pycache__/
+.env
+
+# Frontend
+node_modules/
+dist/
+.env

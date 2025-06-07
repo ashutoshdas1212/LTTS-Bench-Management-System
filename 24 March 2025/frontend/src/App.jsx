@@ -1,5 +1,5 @@
 import { useState } from "react";
-import EmployeeList from "./components/EmployeeList"; // ✅ Employee List Component
+import EmployeeList from "./components/EmployeeList"; 
 import axios from "axios";
 
 function App() {
@@ -7,12 +7,12 @@ function App() {
   const [file, setFile] = useState(null);
   const [uploaded, setUploaded] = useState(false);
 
-  // ✅ Handle file selection
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
 
-  // ✅ Handle file upload
+
   const handleUpload = async () => {
     if (!file) {
       alert("Please select a file to upload!");
@@ -27,14 +27,14 @@ function App() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      setUploaded(true); // ✅ Move to employee list page after successful upload
+      setUploaded(true); 
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("Failed to upload file. Please try again.");
     }
   };
 
-  // ✅ Fetch employees once file is uploaded
+ 
   useState(() => {
     if (uploaded) {
       axios
@@ -48,14 +48,14 @@ function App() {
     <div>
       <h1>Bench Resource Engagement Portal</h1>
 
-      {/* ✅ File Upload Page */}
+ 
       {!uploaded ? (
         <div>
           <input type="file" onChange={handleFileChange} />
           <button onClick={handleUpload}>Upload</button>
         </div>
       ) : (
-        /* ✅ Show Employee List after successful upload */
+      
         <EmployeeList employees={employees} />
       )}
     </div>
