@@ -1,0 +1,389 @@
+ackend Features (Flask + MySQL)
+
+ 
+
+Reads an Excel file and extracts data
+
+ 
+
+Supports any Excel file name (not hardcoded to bt.xlsx)
+
+ 
+
+Stores employee data into MySQL
+
+ 
+
+Creates benchresource database automatically if not exists
+
+ 
+
+Creates employee_data table automatically if not exists
+
+ 
+
+Supports storing employee skills as a comma-separated string
+
+ 
+
+Stores a unique identifier (PS_No) for each employee
+
+ 
+
+Retrieves all employees from the database
+
+ 
+
+Filters employees based on Grade
+
+ 
+
+Filters employees based on Base Location
+
+ 
+
+Filters employees based on multiple Skills
+
+ 
+
+Filters employees based on Skill Bucket
+
+ 
+
+Supports filtering with multiple criteria simultaneously
+
+ 
+
+Pagination support for fetching employee data
+
+ 
+
+Returns distinct Skill Bucket values dynamically
+
+ 
+
+Returns distinct Grade values dynamically
+
+ 
+
+Returns distinct Base Location values dynamically
+
+ 
+
+Returns distinct Skills dynamically
+
+ 
+
+Updates Bench Status (Bench / Not in Bench) with a single API call
+
+ 
+
+Supports downloading all employee data as an Excel file
+
+ 
+
+Uses Flask’s request.form to handle file uploads
+
+ 
+
+Checks if a file is an Excel file before processing
+
+ 
+
+Handles duplicate entries by skipping duplicates in MySQL
+
+ 
+
+Handles missing columns in Excel by filling default values
+
+ 
+
+Supports adding new employees dynamically via Excel re-upload
+
+ 
+
+Deletes all existing employee records when uploading a new file
+
+ 
+
+Uses proper database connection handling to avoid memory leaks
+
+ 
+
+Closes MySQL cursor properly after each query execution
+
+ 
+
+Catches and logs errors if MySQL queries fail
+
+ 
+
+Provides API error responses if the database connection fails
+
+ 
+
+Checks if a requested employee exists before updating Bench Status
+
+ 
+
+Returns meaningful error messages when API requests fail
+
+ 
+
+Uses proper HTTP status codes (200 for success, 400/500 for errors)
+
+ 
+
+Handles cases where an Excel file is empty
+
+ 
+
+Handles cases where an employee has missing fields in Excel
+
+ 
+
+Processes and cleans up Skill Bucket values to remove extra spaces
+
+ 
+
+Ensures that MySQL columns match the expected data types
+
+ 
+
+Uses Flask’s jsonify() to return data in JSON format
+
+ 
+
+Implements Flask CORS to allow frontend to fetch data
+
+ 
+
+Uses Flask’s send_file() to export employee data as Excel
+
+ 
+
+Formats MySQL query results properly before sending to frontend
+
+ 
+
+Logs each API request for debugging
+
+ 
+
+Implements an API endpoint /dropdown-options to fetch filter values
+
+ 
+
+Implements an API endpoint /employees/filter to fetch filtered employees
+
+ 
+
+Allows changing status with a simple button click from frontend
+
+ 
+
+Supports dynamic MySQL queries to filter based on multiple fields
+
+ 
+
+Uses environment variables for database credentials (security best practice)
+
+ 
+
+Implements Flask route /skill_buckets to fetch unique Skill Buckets
+
+ 
+
+ 
+
+ 
+
+---
+
+ 
+
+Frontend Features (React.js + Axios)
+
+ 
+
+Displays a file upload button for Excel files
+
+ 
+
+Handles file selection dynamically
+
+ 
+
+Uploads Excel file to Flask backend using Axios
+
+ 
+
+Displays an error message if the file upload fails
+
+ 
+
+Shows a loading state during file upload
+
+ 
+
+Redirects to Employee List page after successful upload
+
+ 
+
+Fetches all employees using Axios on page load
+
+ 
+
+Displays employee data in a structured table
+
+ 
+
+Creates separate columns for Name, Grade, Skills, and Location
+
+ 
+
+Formats Skill Matrix System values properly
+
+ 
+
+Dynamically generates table rows based on employee data
+
+ 
+
+Displays ‘Bench’ or ‘Not in Bench’ status in a separate column
+
+ 
+
+Implements a toggle button to update Bench Status
+
+ 
+
+Sends a request to the backend to change Bench Status on button click
+
+ 
+
+Uses React useState to store employee data
+
+ 
+
+Uses React useEffect to fetch data when the page loads
+
+ 
+
+Implements a dropdown filter for Grade
+
+ 
+
+Implements a dropdown filter for Base Location
+
+ 
+
+Implements a search box to filter employees by Skills
+
+ 
+
+Filters employees dynamically as per selected criteria
+
+ 
+
+Shows a ‘No records found’ message if no data matches filters
+
+ 
+
+Dropdown for ‘Skill Bucket’ fetches values dynamically from API
+
+ 
+
+Ensures that filtering does not break pagination
+
+ 
+
+Implements pagination to display limited records per page
+
+ 
+
+Provides options to display 20/50/100 records per page
+
+ 
+
+Automatically adjusts table columns when screen size changes
+
+ 
+
+Adds alternate row colors for better readability
+
+ 
+
+Implements hover effects on table rows
+
+ 
+
+Highlights the selected filter values on the UI
+
+ 
+
+Implements a Download Resume button per employee
+
+ 
+
+Displays a button to export employee data as an Excel file
+
+ 
+
+Ensures that filters and pagination reset when a new file is uploaded
+
+ 
+
+Uses Axios error handling to display API failures
+
+ 
+
+Prevents duplicate employee records from appearing in the list
+
+ 
+
+Sorts employee records alphabetically by default
+
+ 
+
+Ensures that filtering and sorting do not conflict
+
+ 
+
+Updates table dynamically when a new file is uploaded
+
+ 
+
+Uses proper CSS to align table and filters properly
+
+ 
+
+Ensures table does not overflow on small screens (responsive UI)
+
+ 
+
+Implements proper button spacing and padding for better UX
+
+ 
+
+Uses react-query for better API data fetching and caching
+
+ 
+
+Uses BrowserRouter to navigate between upload page and employee list
+
+ 
+
+Implements CORS headers to allow backend communication
+
+ 
+
+Uses Axios baseURL to simplify API calls
+
+ 
+
+Ensures that Skill Bucket dropdown shows all distinct values
+
+ 
+
+Ensures that the frontend never crashes due to missing backend responses
